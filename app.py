@@ -30,15 +30,13 @@ print(tmax)
 
 app = Flask(__name__)
 
-@app.route('/h')
+@app.route('/flask', methods=['GET','POST'])
 
 def home():
-    if request.method == 'POST' :
-        model = pickle.load(open('lr_model.pkl','rb'))
-        user_input = request.form.get('size')
-        prediction = model.predict([[user_input]])
-        print(prediction)
-    return render_template('project.html')
+    model = pickle.load(open('lr_model.pkl','rb'))
+    user_input = request.form.get('date')
+    prediction = model.predict([[user_input]])
+    return render_template('project.html', predictions=prediction)
     
 if __name__ == '__main__':
     app.run(debug=True)
